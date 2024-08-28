@@ -932,16 +932,11 @@ VkResult VkVideoEncoderAV1::AssembleBitstreamData(VkSharedBaseObj<VkVideoEncodeF
                        << framesSize - (2 + encodeFrameInfo->bitstreamHeaderBufferSize)
                        << std::endl << std::flush;
         }
-
-        encodeFrameInfo->inputTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-                                          std::chrono::high_resolution_clock::now().time_since_epoch())
-                                                  .count();
-
         encodeFrameInfo->inputTimeStamp = encodeFrameInfo->frameInputOrderNum;
 
         uint64_t pts = encodeFrameInfo->inputTimeStamp;
         uint8_t frameHeader[12];
-        mem_put_le32(frameHeader    , (uint32_t)framesSize); // updated with correct size later on
+        mem_put_le32(frameHeader, (uint32_t)framesSize); // updated with correct size later on
         mem_put_le32(frameHeader + 4, (uint32_t)(pts & 0xffffffff));
         mem_put_le32(frameHeader + 8, (uint32_t)(pts >> 32));
         fwrite(frameHeader, 1, sizeof(frameHeader), m_encoderConfig->outputFileHandler.GetFileHandle());
