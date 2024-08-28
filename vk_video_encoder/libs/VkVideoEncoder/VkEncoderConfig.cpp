@@ -30,6 +30,7 @@ void printHelp(VkVideoCodecOperationFlagBitsKHR codec)
     --dpbMode                       <string>  : select DPB mode: layered, separate\n\
     --inputWidth                    <integer> : Input Width \n\
     --inputHeight                   <integer> : Input Height \n\
+    --frameRate                     <integer/integer> : Framerate fraction \n\
     --inputNumPlanes                <integer> : Number of planes \n\
     --inputChromaSubsampling        <string>  : Chromat subsapling to use, default 420 \n\
     --inputLumaPlanePitch           <integer> : Pitch for Luma plane \n\
@@ -200,6 +201,12 @@ int EncoderConfig::ParseArguments(int argc, char *argv[])
                 fprintf(stderr, "invalid parameter for %s\n", args[i - 1].c_str());
                 return -1;
             }
+        } else if (args[i] == "--frameRate") {
+            if ((++i >= argc) || (sscanf(args[i].c_str(), "%u/%u", &frameRateNumerator, &frameRateDenominator) != 2)) {
+                fprintf(stderr, "invalid parameter for %s\n", args[i - 1].c_str());
+                return -1;
+            }
+            printf("Selected framerate: %u/%u\n", frameRateNumerator, frameRateDenominator);
         } else if (args[i] == "--inputNumPlanes") {
             if ((++i >= argc) || (sscanf(args[i].c_str(), "%u", &input.numPlanes) != 1)) {
                 fprintf(stderr, "invalid parameter for %s\n", args[i - 1].c_str());
