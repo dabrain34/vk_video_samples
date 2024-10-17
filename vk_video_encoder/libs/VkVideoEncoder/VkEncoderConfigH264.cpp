@@ -479,7 +479,7 @@ bool EncoderConfigH264::GetRateControlParameters(VkVideoEncodeRateControlInfoKHR
     pRateControlLayersInfo->frameRateDenominator = frameRateDenominator;
 
     if (rateControlMode == VK_VIDEO_ENCODE_RATE_CONTROL_MODE_DEFAULT_KHR) {
-        pRateControlInfo->rateControlMode = VK_VIDEO_ENCODE_RATE_CONTROL_MODE_VBR_BIT_KHR;
+        pRateControlInfo->rateControlMode = VK_VIDEO_ENCODE_RATE_CONTROL_MODE_DISABLED_BIT_KHR;
     } else {
         pRateControlInfo->rateControlMode = rateControlMode;
     }
