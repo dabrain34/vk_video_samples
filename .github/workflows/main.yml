@@ -56,7 +56,13 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          bash ./update_external_sources.sh
+          cd vk_video_decoder
+          ./update_external_sources.sh
+          mkdir BUILD
+          cd BUILD
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+          make -j
+          cd ../../vk_video_encoder
           mkdir BUILD
           cd BUILD
           cmake -DCMAKE_BUILD_TYPE=Debug ..
@@ -95,7 +101,13 @@ jobs:
 
       - name: Build
         run: |
-          ./update_external_sources.bat
+          cd vk_video_decoder
+          update_external_sources.bat
+          mkdir BUILD
+          cd BUILD
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+          make -j
+          cd ..\..\vk_video_encoder
           mkdir BUILD
           cd BUILD
           cmake -DCMAKE_BUILD_TYPE=Debug ..
